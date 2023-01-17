@@ -14,7 +14,8 @@ export default function Home() {
         <div>
           <Button variant="text">Text</Button>
           <Button variant="contained">Contained</Button>
-          <Button variant="outlined">Outlined</Button>          
+          <Button variant="outlined">Outlined</Button>
+          <Button variant="outlined">Outlined</Button>
         </div>
         <FormControl>
           <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>

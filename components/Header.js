@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { signIn, useSession, signOut } from "next-auth/react";
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
@@ -12,6 +13,7 @@ import PageTitle from './PageTitle';
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
 function Header(props) {
+    const { data: session } = useSession();
     const { onDrawerToggle } = props;
 
     return (
@@ -32,9 +34,14 @@ function Header(props) {
                         <Grid item xs />
 
                         <Grid item>
-                            <IconButton color="inherit" sx={{ p: 0.5 }}>
-                                <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
-                            </IconButton>
+                            {/*<IconButton color="inherit" sx={{ p: 0.5 }}>*/}
+                            {/*    <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />*/}
+                            {/*</IconButton>*/}
+                        </Grid>
+                        <Grid item>
+                            {
+                                session ? (<button onClick={() => signOut()}>로그아웃</button>):(<button onClick={() => signIn("kakao")}>로그인</button>)
+                            }
                         </Grid>
                     </Grid>
                 </Toolbar>

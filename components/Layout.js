@@ -1,16 +1,19 @@
 import * as React from 'react';
+import { useSession } from "next-auth/react";
 import CssBaseline from '@mui/material/CssBaseline';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import Navigator from './Navigator';
 import Header from './Header';
 import lightTheme from '../styles/theme/lightTheme';
+import LoginPage from "./LoginPage";
 
 const drawerWidth = 256;
 
 export default function Layout({ children }) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const isSmUp = useMediaQuery(lightTheme.breakpoints.up('sm'));
+    const { data: session } = useSession();
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -41,7 +44,7 @@ export default function Layout({ children }) {
                 <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                     <Header onDrawerToggle={handleDrawerToggle} />
                     <Box component="main" sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}>
-                        <main>{children}</main>
+                        {session ? (<>{children}</>) : (<LoginPage/>)}
                     </Box>
                 </Box>
             </Box>

@@ -38,10 +38,10 @@ let categories = [
                 url: "/BnMaster"
             },
             {
-                id: '메뉴명1-3',
+                id: '배너 리스트(DB)',
                 icon: <PermMediaOutlinedIcon />,
                 active: false,
-                url: "/Banner/AddBanner"
+                url: "/ads"
             }
         ],
     },

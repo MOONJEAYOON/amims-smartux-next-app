@@ -7,7 +7,7 @@ const PageTitle = () => {
     console.log(router);
     if (router.pathname == "/") {
         pageTitle = "홈"
-    } else if (router.pathname.indexOf('/Banner') != -1) {
+    } else if (router.pathname.indexOf('/Banner') != -1 || router.pathname.indexOf('/ads') != -1) {
         pageTitle = "배너 리스트"
     } else {
         pageTitle = router.pathname

@@ -10,7 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-
+import Link from 'next/link';
 
 const columns = [
     { id: 'no', label: '번호', minWidth: 30, align: 'center' },
@@ -22,28 +22,32 @@ const columns = [
 ];
 
 function createData(no, title, image, bnType, bnDateType, liveYn) {
+
     return { no, title, image, bnType, bnDateType, liveYn };
 }
 
-const rows = [
-    createData('1', '배너테스트1', "default_image.png", "앱링크","기간", "Y"),
-    createData('2', '배너테스트2', "aa.png", "실시간 채널","기간", "Y"),
-    createData('3', '배너테스트3', "도도새.png", "앱링크","기간", "Y"),
-    createData('4', '배너테스트4', "default_image.png", "앱링크","기간", "Y"),
-    createData('5', '배너테스트5', "default_image.png", "앱링크","기간", "Y"),
-    createData('6', '배너테스트6', "default_image.png", "앱링크","기간", "Y"),
-    createData('7', '배너테스트7', "default_image.png", "앱링크","기간", "Y"),
-    createData('8', '배너테스트8', "default_image.png", "앱링크","기간", "Y"),
-    createData('9', '배너테스트9', "default_image.png", "앱링크","기간", "Y"),
-    createData('10', '배너테스트10', "default_image.png", "앱링크","기간", "Y"),
-    createData('11', '배너테스트11', "default_image.png", "앱링크","기간", "Y"),
-    createData('12', '배너테스트12', "default_image.png", "앱링크","기간", "Y"),
-    createData('13', '배너테스트13', "default_image.png", "앱링크","기간", "Y"),
-    createData('14', '배너테스트14', "default_image.png", "앱링크","기간", "Y"),
-    createData('15', '배너테스트15', "default_image.png", "앱링크","기간", "Y"),
-];
 
-export default function Banner() {
+
+export async function getStaticProps({ params }) {
+  const res = await fetch('http://localhost:3000/api/ads')
+
+  if (res.ok) {
+    const data = await res.json();
+
+    return{
+        props: {data},
+      };
+  } else {
+    return {
+      props: {}
+    }
+  }
+}
+
+export default function Banner({data}) {
+    const rows = [] ;
+    data.forEach((item) => rows.push(createData(item.ads_no, item.title, "default_image.png", item.ads_type,"기간", item.live_yn)))
+
     const router = useRouter();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -112,7 +116,9 @@ export default function Banner() {
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
             <Stack direction="row" justifyContent="end">
-                <Button variant="contained">등록하기</Button>
+                <Link href="/ads/addBanner">
+                    <Button variant="contained">등록하기</Button>
+                </Link>
             </Stack>
         </Paper>
     );
